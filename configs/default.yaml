@@ -1,0 +1,41 @@
+paths:
+  training_data: data/raw/training_data.csv
+  human_ranked: data/raw/human_ranked.csv
+  parquet_source: data/raw/mmlu_dataset.parquet
+  predictions: outputs/predictions/predictions.csv
+  metrics_dir: reports/metrics
+  figures_dir: reports/figures
+  checkpoints_dir: outputs/checkpoints
+  logs_dir: outputs/logs
+
+runtime:
+  mode: full
+  device: auto
+  random_seed: 42
+
+models:
+  - google-t5/t5-small
+  - google/flan-t5-small
+  - sshleifer/distilbart-cnn-6-6
+  - sshleifer/distilbart-xsum-12-3
+
+hyperparameters:
+  low:
+    batch_size: 4
+    epochs: 1
+    learning_rate: 1.0e-5
+  medium:
+    batch_size: 8
+    epochs: 3
+    learning_rate: 5.0e-5
+  high:
+    batch_size: 16
+    epochs: 5
+    learning_rate: 1.0e-4
+
+smoke:
+  model_limit: 1
+  hyperparameter_limit: 1
+  row_limit:
+    training: 64
+    evaluation: 32
